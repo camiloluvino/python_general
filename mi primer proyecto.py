@@ -1,1 +1,0 @@
-# este es un punto .py que es un archivo de python mientras que ipynb es un archivo Jupyter Notebook IPython Notebook
