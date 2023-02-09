@@ -14,7 +14,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 #%%
 
-driver = webdriver.Chrome(executable_path= "chromedriver_win32 (1)\chromedriver.exe")
+driver = webdriver.Chrome(executable_path= "chromedriver\chromedriver.exe")
 url = "https://www.portalinmobiliario.com/arriendo/departamento/valparaiso"
 
 driver.get(url)
@@ -48,6 +48,9 @@ metros = [element.text for element in lista]
 
 lista = driver.find_elements(By.CLASS_NAME, clase_direccion)
 ubicacion = [element.text for element in lista]
+
+# necesito sacar el link para añadirlo
+
 # andes-list andes-floating-menu andes-list--default andes-list--selectable
 
 # element = driver.find_element(By.LINK_TEXT, "Siguiente")
