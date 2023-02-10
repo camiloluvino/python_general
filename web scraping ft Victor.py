@@ -24,6 +24,7 @@ clase_precio = "price-tag-fraction"
 clase_unidad = "price-tag-symbol"
 clase_m2 = "ui-search-card-attributes__attribute"
 clase_direccion = "ui-search-item__group__element.ui-search-item__location.shops__items-group-details"
+link = "ui-search-result__image.ui-search-link"
 
 # clase_boton = "andes-pagination__arrow-title"
 clase_boton = "andes-dropdown__trigger"
@@ -48,6 +49,9 @@ metros = [element.text for element in lista]
 
 lista = driver.find_elements(By.CLASS_NAME, clase_direccion)
 ubicacion = [element.text for element in lista]
+
+lista = driver.find_elements(By.CLASS_NAME, link)
+enlace = [element.text for element in lista]
 
 # necesito sacar el link para añadirlo
 
@@ -93,7 +97,8 @@ datos = {"precio": precio,
          "unidad": unidad,
          "ubicacion": ubicacion,
          "metros": metros_datos,
-         "dormitorio": dorm_datos,}    
+         "dormitorio": dorm_datos,
+         "enlace": enlace}    
 df = pd.DataFrame(datos)
 
 xl.view(df)
