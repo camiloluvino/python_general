@@ -1,28 +1,16 @@
-# %% [markdown]
-# # Extraer tablas de PDFs
-
-# %% [markdown]
-# ## Versión Victor con 1 pdf excel
-
+# IMPORTAR LIBRERIAS
 # %%
-# importamos librerias
 from tabula import read_pdf
-#no etniendo...dbería importar tabula y con ello la funcíon, no eitneod por qué import + funcion / R : porque read_pdf es un módulo probablemente
 import pandas as pd
 
-# leer pdf 
+# 
+# %%
 doc = read_pdf("fuentes de datos/epubPdf_toMarkdownTxt/FMCA_17412886-3_202207_U_.pdf", pages = "all")
 
-# devuelve una lista, que la llamamos "doc" que contiene el número de dataframes de acuerdo a las tablas que encontró.abs(x)
-print("tipo de objeto:",type(doc))
-print("número de elementos:",len(doc))
-#comentario: interesante que le pueda poner antes como el texto que define lo que aparecerá
-
-# %%
 # crea un archivo llamado "tablas fundos mutuos.xlsx"
 writer = pd.ExcelWriter("resultados/tablas fondos mutuos.xlsx")
-# la idea es guardar cada tabla en una hoja aparte dentro del mismo excel
 
+# la idea es guardar cada tabla en una hoja aparte dentro del mismo excel
 doc[0].to_excel(writer, sheet_name = "tabla 1")
 doc[1].to_excel(writer, sheet_name = "tabla 2")
 doc[2].to_excel(writer, sheet_name = "tabla 3")
@@ -48,9 +36,7 @@ string = string1 +"-" +string2
 print(string)
 
 #%%
-#importamos la libreria glob
 import glob
-
 path = r"C:\Users\redk8\Documents\Proyectos en Python\python_general\fuentes de datos\epubPdf_toMarkdownTxt\FMCA*.pdf"
 files = glob.glob(path)
 print(files)
@@ -59,7 +45,6 @@ print(files)
 archivos = glob.glob("ejemplos_pdf/*.pdf")
 
 #la funcion devuelve una lista que la llamamos "archivos"
-
 doc = read_pdf(archivos[0], pages = "all")
 
 #%%
@@ -69,13 +54,8 @@ df = pd.DataFrame()
 for page in doc:
     df= pd.concat([df,page])
 
-# %% [markdown]
-# ## Versión Chat GPT con varios excel
-
 # %%
-import pandas as pd
-from tabula import read_pdf
-
+## Versión Chat GPT con varios excel
 def process_pdfs(pdf_files, excel_file):
     # Create the ExcelWriter object
     writer = pd.ExcelWriter(excel_file)
@@ -98,14 +78,21 @@ pdf_files = [
     'C:\\Users\\redk8\\Documents\\Proyectos en Python\\python_general\\fuentes de datos\\epubPdf_toMarkdownTxt\\FMCA_17412886-3_202211_U_.pdf',
     'C:\\Users\\redk8\\Documents\\Proyectos en Python\\python_general\\fuentes de datos\\epubPdf_toMarkdownTxt\\FMCA_17412886-3_202212_U_.pdf'
 ]
-
 process_pdfs(pdf_files, "resultados/tablas fondos mutuos v.2.xlsx")
 
-
-# %% [markdown]
-# # Extraer texto de pdf
+#%%
+# read pdf postulaciones doctorado
+basedoctorado = read_pdf(r"C:\Users\redk8\Dropbox\Graph_cosascotidianas\postulación beca anid 2022\documentación postulación año académico 2023\RES_1808_2023_ADJUDICACION_E2100_2023.pdf", pages="all")
+# create a pandas dataframe with the first 55 elements of basedoctorado
+df = pd.concat(basedoctorado[:57], axis=0)
+# create an excel writer object and write the dataframe to the first sheet of the excel file
+basedoctorado_paraexcel = pd.ExcelWriter("resultados/base doctorado.xlsx", engine='xlsxwriter')
+df.to_excel(basedoctorado_paraexcel, sheet_name='Sheet1', index=False)
+# save and close the excel file
+basedoctorado_paraexcel.save()
 
 # %%
+# Extraer texto de pdf
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
@@ -130,9 +117,3 @@ def pdf_to_text(input_file,output):
  
 output_txt = 'resultados/Brown - 2021 - En las ruinas del neoliberalismo el ascenso de la.txt'
 pdf_to_text(input_pdf,output_txt)
-
-
-
-
-
-
