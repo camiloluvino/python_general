@@ -1,3 +1,4 @@
+#%%
 import pypub
 from pathlib import Path
 
